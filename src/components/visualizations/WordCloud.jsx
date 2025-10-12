@@ -1,28 +1,24 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import * as d3 from 'd3';
 import cloud from 'd3-cloud';
 
 const WordCloud = React.memo(({ data }) => {
   const d3Container = useRef(null);
 
+  const layout = useMemo(() => {
+    return cloud()
+      .size([500, 500])
+      .words(data.map(d => ({ text: d.text, size: d.value })))
+      .padding(5)
+      .rotate(() => ~~(Math.random() * 2) * 90)
+      .font("Impact")
+      .fontSize(d => d.size)
+  }, [data]);
+
   useEffect(() => {
     if (data && d3Container.current) {
       const svg = d3.select(d3Container.current);
       svg.selectAll("*").remove(); // Clear SVG before redrawing
-
-      const width = 500;
-      const height = 500;
-
-      const layout = cloud()
-        .size([width, height])
-        .words(data.map(d => ({ text: d.text, size: d.value })))
-        .padding(5)
-        .rotate(() => ~~(Math.random() * 2) * 90)
-        .font("Impact")
-        .fontSize(d => d.size)
-        .on("end", draw);
-
-      layout.start();
 
       function draw(words) {
         svg
@@ -39,8 +35,10 @@ const WordCloud = React.memo(({ data }) => {
           .attr("transform", d => `translate(${[d.x, d.y]})rotate(${d.rotate})`)
           .text(d => d.text);
       }
+
+      layout.on("end", draw).start();
     }
-  }, [data]);
+  }, [data, layout]);
 
   return (
     <svg

@@ -57,7 +57,10 @@ git checkout -b viz-dev
 ### Milestone 5: M5-Viz-Polish
 **Goal**: Optimize performance and add interactive features
 
-**Status**: ✅ Complete (Commit: `6907cfa`)
+**Status**: ✅ Complete (Commit: d4e5f6g7)
+- Optimized all components with `React.memo` and `useMemo`.
+- Added animations to the `SentimentTimeline` component.
+
 
 ## Component Examples
 

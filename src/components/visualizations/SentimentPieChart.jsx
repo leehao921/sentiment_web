@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { useTranslation } from 'react-i18next';
 
@@ -11,11 +11,11 @@ const COLORS = {
 const SentimentPieChart = React.memo(({ data }) => {
   const { t } = useTranslation();
 
-  const chartData = [
+  const chartData = useMemo(() => [
     { name: t('sentiment.positive'), value: data.positive, sentiment: 'positive' },
     { name: t('sentiment.negative'), value: data.negative, sentiment: 'negative' },
     { name: t('sentiment.neutral'), value: data.neutral, sentiment: 'neutral' },
-  ];
+  ], [data, t]);
 
   return (
     <ResponsiveContainer width="100%" height={300}>
