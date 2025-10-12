@@ -16,6 +16,11 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+// Root endpoint - redirect to API info
+app.get('/', (req, res) => {
+  res.redirect('/api');
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
