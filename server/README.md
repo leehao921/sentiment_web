@@ -77,3 +77,36 @@ Default: 3001
 ## Environment
 - Development: Uses local gcloud credentials
 - Production: Uses Cloud Run service account
+
+## Deployment to Google Cloud Run
+
+### Build and Deploy
+```bash
+# Deploy from source (recommended)
+gcloud run deploy sentiment-api \
+  --source . \
+  --region asia-east1 \
+  --allow-unauthenticated \
+  --project sharp-bivouac-472901-s8 \
+  --set-env-vars GOOGLE_CLOUD_PROJECT=sharp-bivouac-472901-s8,GCS_BUCKET=sharp-bivouac-472901-s8-docs
+
+# Or build Docker image locally first
+docker build -t sentiment-api .
+gcloud builds submit --tag gcr.io/sharp-bivouac-472901-s8/sentiment-api
+gcloud run deploy sentiment-api \
+  --image gcr.io/sharp-bivouac-472901-s8/sentiment-api \
+  --region asia-east1 \
+  --allow-unauthenticated
+```
+
+### Get Deployment URL
+```bash
+gcloud run services describe sentiment-api --region asia-east1 --format='value(status.url)'
+```
+
+### Test Production Endpoints
+```bash
+# Replace YOUR_CLOUD_RUN_URL with actual URL
+curl https://YOUR_CLOUD_RUN_URL/health
+curl https://YOUR_CLOUD_RUN_URL/api/analytics
+```
