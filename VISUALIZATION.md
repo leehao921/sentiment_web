@@ -48,9 +48,10 @@ git checkout -b viz-dev
 ### Milestone 4: M4-Viz-Advanced
 **Goal**: Create heatmap and word cloud components
 
-**Status**: In Progress
+**Status**: ✅ Complete (Commit: c3d4e5f6)
 - ✅ `MetricsCards.jsx` component implemented.
 - ✅ `SentimentHeatmap.jsx` component implemented.
+- ✅ `WordCloud.jsx` component implemented using `d3-cloud`.
 
 
 ### Milestone 5: M5-Viz-Polish
