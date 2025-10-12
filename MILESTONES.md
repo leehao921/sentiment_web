@@ -10,13 +10,13 @@
 **Branch**: `backend-dev`
 **Files**: `server/` directory
 
-- [ ] **M1-Backend-Setup**: Initialize Express server with CORS
+- [x] **M1-Backend-Setup**: Initialize Express server with CORS (2025-10-12) - Commit: f58c928
   - Initialize Express server on port 3001
   - Add CORS middleware
   - Create health check endpoint
   - Commit: `feat: setup Express server with CORS and basic routes`
 
-- [ ] **M2-Backend-GCP-Integration**: Connect to Google Cloud Storage
+- [x] **M2-Backend-GCP-Integration**: Connect to Google Cloud Storage (2025-10-12) - Commit: 4636824
   - Install @google-cloud/storage
   - Create GCP Storage client with ADC
   - Implement /api/files endpoint
@@ -47,35 +47,35 @@
 **Branch**: `frontend-dev`
 **Files**: `src/` (except `src/components/visualizations/`), `public/`, `package.json`
 
-- [ ] **M1-Frontend-Setup**: Initialize React app with routing
+- [x] **M1-Frontend-Setup**: Initialize React app with routing (2025-10-12) - Commit: 57121de
   - Install react-router-dom
   - Create folder structure
   - Implement basic routing
   - Create Dashboard and NotFound pages
   - Commit: `feat: setup React app with routing and basic structure`
 
-- [ ] **M2-Frontend-i18n**: Configure Chinese Traditional localization
+- [x] **M2-Frontend-i18n**: Configure Chinese Traditional localization (2025-10-12) - Commit: ae7d451
   - Install i18next and react-i18next
   - Create i18n configuration
   - Add zh_TW translations
   - Configure Chinese fonts (Noto Sans TC)
   - Commit: `feat: add i18n configuration for Traditional Chinese`
 
-- [ ] **M3-Frontend-API**: Connect to backend API
+- [x] **M3-Frontend-API**: Connect to backend API (2025-10-12) - Commit: 5453848
   - Install axios
   - Create API service layer
   - Configure API base URL
   - Add error handling
   - Commit: `feat: integrate backend API service layer`
 
-- [ ] **M4-Frontend-Context**: Implement state management
+- [x] **M4-Frontend-Context**: Implement state management (2025-10-12) - Commit: e16c0f1
   - Create SentimentContext with Provider
   - Implement data fetching logic
   - Create useSentiment custom hook
   - Add localStorage caching
   - Commit: `feat: add SentimentContext for global state`
 
-- [ ] **M5-Frontend-Layout**: Complete main layout and navigation
+- [x] **M5-Frontend-Layout**: Complete main layout and navigation (2025-10-12) - Commit: 065ee71
   - Install Material-UI with Chinese locale
   - Create responsive navigation bar
   - Implement MainLayout component
@@ -129,7 +129,13 @@
 **Branch**: `devops`
 **Files**: `.github/workflows/`, `vercel.json`, `Dockerfile`, `.env.example`, `docs/`
 
-- [ ] **M1-DevOps-CI**: Setup Git Actions workflow
+- [x] **M0-DevOps-ProjectSetup**: Setup project documentation (2025-10-12) - Commit: 4bccf63
+  - Created role-specific guides (BACKEND.md, FRONTEND.md, VISUALIZATION.md, DEVOPS.md)
+  - Added comprehensive CLAUDE.md
+  - Created MILESTONES.md tracker
+  - Configured .gitignore
+
+- [x] **M1-DevOps-CI**: Setup Git Actions workflow (2025-10-12) - Commits: 4bccf63, 7c1dd31
   - Create CI workflow for backend and frontend
   - Add automated testing on push
   - Configure Node.js 18 environment
@@ -215,12 +221,12 @@ DevOps needs all components ready before:
 
 ## Completion Status
 
-**Overall Progress**: 0/20 milestones (0%)
+**Overall Progress**: 9/21 milestones (43%)
 
-- Backend: 0/5 (0%)
-- Frontend: 0/5 (0%)
+- Backend: 2/5 (40%)
+- Frontend: 5/5 (100%) ✅
 - Visualization: 0/5 (0%)
-- DevOps: 0/5 (0%)
+- DevOps: 2/6 (33%)
 
 ---
 
@@ -282,6 +288,6 @@ git push origin main
 
 ---
 
-**Last Updated**: 2025-01-12
-**Project Start Date**: 2025-01-12
-**Target Completion**: 2025-02-12
+**Last Updated**: 2025-10-12
+**Project Start Date**: 2025-10-12
+**Target Completion**: 2025-11-12
