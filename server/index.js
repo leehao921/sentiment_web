@@ -1,6 +1,11 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
+
+// Only load dotenv in development
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const { listFiles, checkBucketAccess } = require('./utils/gcpClient');
 const { getAllSentimentData, getAnalytics } = require('./controllers/sentimentController');
 
