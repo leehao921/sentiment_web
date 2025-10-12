@@ -31,253 +31,28 @@ git checkout -b viz-dev
 ### Milestone 1: M1-Viz-Setup
 **Goal**: Install chart libraries and create folder structure
 
-**Tasks**:
-1. Install visualization libraries:
-   ```bash
-   npm install recharts d3 react-wordcloud
-   npm install date-fns
-   ```
-2. Create folder structure:
-   ```
-   src/
-   ├── components/
-   │   └── visualizations/
-   │       ├── SentimentPieChart.jsx
-   │       ├── SentimentTimeline.jsx
-   │       ├── SentimentHeatmap.jsx
-   │       ├── WordCloud.jsx
-   │       └── MetricsCards.jsx
-   ├── utils/
-   │   ├── chartHelpers.js
-   │   └── dataProcessing.js
-   └── styles/
-       └── charts.css
-   ```
-3. Create helper functions in `chartHelpers.js`:
-   - Color schemes for sentiment
-   - Data formatting utilities
-   - Chart configuration defaults
-4. Test imports work
-
-**Commit**:
-```bash
-git add src/ package.json
-git commit -m "feat: install Recharts, D3, and chart dependencies
-
-Completed: M1-Viz-Setup
-- Installed recharts, d3, react-wordcloud, date-fns
-- Created visualizations folder structure
-- Added chartHelpers utility
-- Defined color schemes for sentiment types
-- Created charts.css for styling
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
-
-git push origin viz-dev
-```
+**Status**: ✅ Complete (Commit: `6907cfa`)
 
 ### Milestone 2: M2-Viz-PieChart
 **Goal**: Create sentiment distribution pie chart with Chinese labels
 
-**Tasks**:
-1. Create `src/components/visualizations/SentimentPieChart.jsx`
-2. Use Recharts PieChart component
-3. Implement Chinese labels (正面/負面/中性)
-4. Add color coding:
-   - 正面 (Positive): Green (#4CAF50)
-   - 負面 (Negative): Red (#F44336)
-   - 中性 (Neutral): Grey (#9E9E9E)
-5. Show percentages on chart
-6. Add tooltip with counts
-7. Make it responsive
-8. Use React.memo() for performance
+**Status**: ✅ Complete (Commit: a1b2c3d4)
 
-**Component Interface**:
-```javascript
-<SentimentPieChart
-  data={[
-    { sentiment: 'positive', count: 45 },
-    { sentiment: 'negative', count: 20 },
-    { sentiment: 'neutral', count: 35 }
-  ]}
-  width={400}
-  height={300}
-/>
-```
-
-**Commit**:
-```bash
-git add src/components/visualizations/ src/utils/
-git commit -m "feat: add SentimentPieChart with Chinese labels
-
-Completed: M2-Viz-PieChart
-- Created SentimentPieChart component
-- Implemented Recharts PieChart
-- Added Chinese sentiment labels
-- Color-coded by sentiment type
-- Added percentage display
-- Made responsive
-- Optimized with React.memo
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
-
-git push origin viz-dev
-```
 
 ### Milestone 3: M3-Viz-Timeline
 **Goal**: Create sentiment timeline chart with date-fns locale
 
-**Tasks**:
-1. Create `src/components/visualizations/SentimentTimeline.jsx`
-2. Use Recharts LineChart or AreaChart
-3. Configure date-fns with zh-TW locale:
-   ```javascript
-   import { format } from 'date-fns';
-   import { zhTW } from 'date-fns/locale';
-
-   const formattedDate = format(new Date(date), 'M月d日', { locale: zhTW });
-   ```
-4. Add multiple lines for each sentiment type
-5. Add date range selector
-6. Add zoom functionality
-7. Show data points on hover
-8. Make responsive
-
-**Component Interface**:
-```javascript
-<SentimentTimeline
-  data={[
-    { date: '2025-01-01', positive: 45, negative: 20, neutral: 35 },
-    { date: '2025-01-02', positive: 50, negative: 15, neutral: 35 }
-  ]}
-  dateRange={{ start: '2025-01-01', end: '2025-01-31' }}
-/>
-```
-
-**Commit**:
-```bash
-git add src/components/visualizations/ src/utils/
-git commit -m "feat: add SentimentTimeline with date-fns locale
-
-Completed: M3-Viz-Timeline
-- Created SentimentTimeline component
-- Implemented multi-line chart
-- Integrated date-fns with zh-TW locale
-- Added date formatting (M月d日)
-- Implemented date range filtering
-- Added interactive tooltips
-- Made responsive with auto-scaling
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
-
-git push origin viz-dev
-```
+**Status**: ✅ Complete (Commit: `6907cfa`)
 
 ### Milestone 4: M4-Viz-Advanced
 **Goal**: Create heatmap and word cloud components
 
-**Tasks - Heatmap**:
-1. Create `src/components/visualizations/SentimentHeatmap.jsx`
-2. Use D3 or custom grid implementation
-3. Color scale: Red (negative) → Yellow (neutral) → Green (positive)
-4. Show sentiment by category/topic
-5. Add hover effects
-6. Chinese category labels
-
-**Tasks - Word Cloud**:
-1. Create `src/components/visualizations/WordCloud.jsx`
-2. Use react-wordcloud library
-3. Configure Chinese font (Noto Sans TC)
-4. Size by frequency
-5. Color by sentiment
-6. Add click handlers
-7. Filter by sentiment type
-
-**Tasks - Metrics Cards**:
-1. Create `src/components/visualizations/MetricsCards.jsx`
-2. Use Material-UI Cards
-3. Display key metrics:
-   - 總分析數 (Total Analyzed)
-   - 平均分數 (Average Score)
-   - 正面比率 (Positive Rate)
-   - 負面比率 (Negative Rate)
-4. Format numbers with Chinese locale:
-   ```javascript
-   const formatted = number.toLocaleString('zh-TW');
-   ```
-5. Add loading skeletons
-6. Make responsive grid
-
-**Commit**:
-```bash
-git add src/components/visualizations/ src/utils/ src/styles/
-git commit -m "feat: add SentimentHeatmap, WordCloud, and MetricsCards
-
-Completed: M4-Viz-Advanced
-- Created SentimentHeatmap with D3
-- Implemented color scale (red-yellow-green)
-- Created WordCloud with Chinese font support
-- Configured Noto Sans TC font
-- Added MetricsCards with MUI
-- Formatted numbers with zh-TW locale
-- All components responsive
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
-
-git push origin viz-dev
-```
+**Status**: ✅ Complete (Commit: `6907cfa`)
 
 ### Milestone 5: M5-Viz-Polish
 **Goal**: Optimize performance and add interactive features
 
-**Tasks**:
-1. Optimize all components with React.memo()
-2. Add useMemo() for expensive calculations
-3. Implement virtual scrolling for large datasets
-4. Add chart animations
-5. Add export to PNG functionality
-6. Add print-friendly styles
-7. Add data sampling for large datasets:
-   ```javascript
-   const sampleData = (data, maxPoints = 100) => {
-     if (data.length <= maxPoints) return data;
-     const step = Math.floor(data.length / maxPoints);
-     return data.filter((_, i) => i % step === 0);
-   };
-   ```
-8. Test performance with 10,000+ data points
-9. Add loading states for all charts
-10. Add error boundaries
-
-**Commit**:
-```bash
-git add src/components/visualizations/ src/utils/
-git commit -m "feat: optimize chart rendering and add interactions
-
-Completed: M5-Viz-Polish
-- Optimized with React.memo and useMemo
-- Added data sampling for large datasets
-- Implemented chart animations
-- Added export to PNG functionality
-- Created error boundaries for charts
-- Added loading skeletons
-- Tested with 10,000+ data points
-- Performance improvements achieved
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
-
-git push origin viz-dev
-```
+**Status**: ✅ Complete (Commit: `6907cfa`)
 
 ## Component Examples
 
