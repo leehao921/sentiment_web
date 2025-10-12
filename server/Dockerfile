@@ -13,11 +13,10 @@ RUN npm ci --only=production
 # Copy application code
 COPY . .
 
-# Expose port
+# Expose port (Cloud Run will provide PORT env var)
 EXPOSE 8080
 
-# Set environment variable for Cloud Run
-ENV PORT=8080
+# Set environment variable for production
 ENV NODE_ENV=production
 
 # Start the server
