@@ -1,42 +1,84 @@
 const { listFiles, downloadFile } = require('../utils/gcpClient');
 
+// Simple in-memory cache
+let dataCache = null;
+let cacheTimestamp = null;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+/**
+ * Fetch all data from GCS (with caching)
+ */
+const fetchAllData = async () => {
+  // Check cache
+  if (dataCache && cacheTimestamp && (Date.now() - cacheTimestamp) < CACHE_DURATION) {
+    console.log('Returning cached data');
+    return dataCache;
+  }
+
+  console.log('Fetching fresh data from GCS');
+
+  const files = await listFiles('rawdata/');
+  const jsonFiles = files.filter(file => file.name.endsWith('.json'));
+
+  const allData = [];
+  for (const file of jsonFiles) {
+    try {
+      const contents = await downloadFile(file.name);
+      const jsonData = JSON.parse(contents.toString('utf-8'));
+
+      if (Array.isArray(jsonData)) {
+        allData.push(...jsonData);
+      } else {
+        allData.push(jsonData);
+      }
+    } catch (parseError) {
+      console.error(`Error parsing ${file.name}:`, parseError.message);
+    }
+  }
+
+  // Update cache
+  dataCache = allData;
+  cacheTimestamp = Date.now();
+
+  return allData;
+};
+
 /**
  * Get all sentiment data from JSON files in GCS bucket
+ * Supports filtering by type and date range
+ * Query params: ?type=positive|negative|neutral&startDate=YYYY-MM-DD&endDate=YYYY-MM-DD
  */
 const getAllSentimentData = async (req, res) => {
   try {
-    // List all JSON files
-    const files = await listFiles('rawdata/');
-    const jsonFiles = files.filter(file => file.name.endsWith('.json'));
+    let allData = await fetchAllData();
 
-    console.log(`Found ${jsonFiles.length} JSON files`);
+    // Filter by sentiment type
+    const { type, startDate, endDate } = req.query;
 
-    // Download and parse all JSON files
-    const allData = [];
-    for (const file of jsonFiles) {
-      try {
-        const contents = await downloadFile(file.name);
-        const jsonData = JSON.parse(contents.toString('utf-8'));
-
-        // Handle both single objects and arrays
-        if (Array.isArray(jsonData)) {
-          allData.push(...jsonData);
-        } else {
-          allData.push(jsonData);
-        }
-      } catch (parseError) {
-        console.error(`Error parsing ${file.name}:`, parseError.message);
-        // Continue with other files
-      }
+    if (type) {
+      allData = allData.filter(item =>
+        item.sentiment && item.sentiment.toLowerCase() === type.toLowerCase()
+      );
     }
 
-    console.log(`Successfully processed ${allData.length} sentiment records`);
+    // Filter by date range
+    if (startDate || endDate) {
+      allData = allData.filter(item => {
+        if (!item.timestamp) return false;
+
+        const itemDate = new Date(item.timestamp);
+        if (startDate && itemDate < new Date(startDate)) return false;
+        if (endDate && itemDate > new Date(endDate)) return false;
+
+        return true;
+      });
+    }
 
     res.json({
       data: allData,
       total: allData.length,
-      source: `gs://${process.env.GCS_BUCKET}/rawdata/`,
-      filesProcessed: jsonFiles.length
+      filters: { type, startDate, endDate },
+      source: `gs://${process.env.GCS_BUCKET}/rawdata/`
     });
   } catch (error) {
     console.error('Error in getAllSentimentData:', error);
@@ -77,8 +119,72 @@ const normalizeSentimentData = (data) => {
   };
 };
 
+/**
+ * Get analytics and aggregated sentiment statistics
+ */
+const getAnalytics = async (req, res) => {
+  try {
+    const allData = await fetchAllData();
+
+    // Calculate sentiment distribution
+    const distribution = {
+      positive: 0,
+      negative: 0,
+      neutral: 0
+    };
+
+    let totalScore = 0;
+    let scoreCount = 0;
+    const dateCount = {};
+
+    allData.forEach(item => {
+      // Count by sentiment type
+      const sentiment = (item.sentiment || 'neutral').toLowerCase();
+      if (distribution.hasOwnProperty(sentiment)) {
+        distribution[sentiment]++;
+      }
+
+      // Calculate average score
+      if (item.score !== undefined && item.score !== null) {
+        totalScore += parseFloat(item.score);
+        scoreCount++;
+      }
+
+      // Count by date
+      if (item.timestamp) {
+        const date = new Date(item.timestamp).toISOString().split('T')[0];
+        dateCount[date] = (dateCount[date] || 0) + 1;
+      }
+    });
+
+    const averageScore = scoreCount > 0 ? (totalScore / scoreCount).toFixed(2) : 0;
+
+    // Get date range
+    const dates = Object.keys(dateCount).sort();
+    const dateRange = dates.length > 0 ? {
+      start: dates[0],
+      end: dates[dates.length - 1]
+    } : null;
+
+    res.json({
+      distribution,
+      averageScore: parseFloat(averageScore),
+      totalAnalyzed: allData.length,
+      dateRange,
+      dailyCounts: dateCount
+    });
+  } catch (error) {
+    console.error('Error in getAnalytics:', error);
+    res.status(500).json({
+      error: 'Failed to fetch analytics',
+      message: error.message
+    });
+  }
+};
+
 module.exports = {
   getAllSentimentData,
+  getAnalytics,
   validateSentimentData,
   normalizeSentimentData
 };

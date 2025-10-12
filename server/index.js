@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const { listFiles, checkBucketAccess } = require('./utils/gcpClient');
-const { getAllSentimentData } = require('./controllers/sentimentController');
+const { getAllSentimentData, getAnalytics } = require('./controllers/sentimentController');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -29,7 +29,8 @@ app.get('/api', (req, res) => {
       'GET /health',
       'GET /api',
       'GET /api/files',
-      'GET /api/sentiment-data'
+      'GET /api/sentiment-data?type=positive|negative|neutral&startDate=YYYY-MM-DD&endDate=YYYY-MM-DD',
+      'GET /api/analytics'
     ]
   });
 });
@@ -65,6 +66,9 @@ app.get('/api/files', async (req, res) => {
 
 // Get all sentiment data (M3)
 app.get('/api/sentiment-data', getAllSentimentData);
+
+// Get analytics (M4)
+app.get('/api/analytics', getAnalytics);
 
 // 404 handler
 app.use((req, res) => {
