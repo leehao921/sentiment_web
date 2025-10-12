@@ -50,6 +50,7 @@ git checkout -b viz-dev
 
 **Status**: In Progress
 - ✅ `MetricsCards.jsx` component implemented.
+- ✅ `SentimentHeatmap.jsx` component implemented.
 
 
 ### Milestone 5: M5-Viz-Polish
