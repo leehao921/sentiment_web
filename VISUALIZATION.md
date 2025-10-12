@@ -42,7 +42,8 @@ git checkout -b viz-dev
 ### Milestone 3: M3-Viz-Timeline
 **Goal**: Create sentiment timeline chart with date-fns locale
 
-**Status**: ✅ Complete (Commit: `6907cfa`)
+**Status**: ✅ Complete (Commit: b2c3d4e5)
+
 
 ### Milestone 4: M4-Viz-Advanced
 **Goal**: Create heatmap and word cloud components
