@@ -8,6 +8,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const { listFiles, checkBucketAccess } = require('./utils/gcpClient');
 const { getAllSentimentData, getAnalytics } = require('./controllers/sentimentController');
+const { getCooccurrenceData } = require('./controllers/cooccurrenceController');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -40,7 +41,8 @@ app.get('/api', (req, res) => {
       'GET /api',
       'GET /api/files',
       'GET /api/sentiment-data?type=positive|negative|neutral&startDate=YYYY-MM-DD&endDate=YYYY-MM-DD',
-      'GET /api/analytics'
+      'GET /api/analytics',
+      'GET /api/cooccurrence?term=暈船&threshold=5'
     ]
   });
 });
@@ -79,6 +81,9 @@ app.get('/api/sentiment-data', getAllSentimentData);
 
 // Get analytics (M4)
 app.get('/api/analytics', getAnalytics);
+
+// Get co-occurrence network data (M6)
+app.get('/api/cooccurrence', getCooccurrenceData);
 
 // 404 handler
 app.use((req, res) => {

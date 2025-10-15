@@ -1,4 +1,5 @@
 const { listFiles, downloadFile } = require('../utils/gcpClient');
+const { processDcardDocument } = require('../utils/sentimentAnalyzer');
 
 // Simple in-memory cache
 let dataCache = null;
@@ -26,11 +27,15 @@ const fetchAllData = async () => {
       const contents = await downloadFile(file.name);
       const jsonData = JSON.parse(contents.toString('utf-8'));
 
-      if (Array.isArray(jsonData)) {
-        allData.push(...jsonData);
-      } else {
-        allData.push(jsonData);
-      }
+      let documents = Array.isArray(jsonData) ? jsonData : [jsonData];
+
+      // Process each document through sentiment analyzer
+      documents.forEach(doc => {
+        const processed = processDcardDocument(doc);
+        if (processed) {
+          allData.push(processed);
+        }
+      });
     } catch (parseError) {
       console.error(`Error parsing ${file.name}:`, parseError.message);
     }
@@ -182,9 +187,18 @@ const getAnalytics = async (req, res) => {
   }
 };
 
+/**
+ * Get sentiment data for analysis (internal use)
+ * Returns raw data array without response formatting
+ */
+const getSentimentDataForAnalysis = async () => {
+  return await fetchAllData();
+};
+
 module.exports = {
   getAllSentimentData,
   getAnalytics,
   validateSentimentData,
-  normalizeSentimentData
+  normalizeSentimentData,
+  getSentimentDataForAnalysis
 };
