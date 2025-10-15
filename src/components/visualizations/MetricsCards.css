@@ -1,0 +1,44 @@
+/**
+ * MetricsCards Component Styles
+ * Dark High-Tech Theme
+ */
+
+.metrics-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.metrics-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 255, 0.03) 0%,
+    rgba(79, 195, 247, 0.03) 50%,
+    rgba(187, 134, 252, 0.03) 100%
+  );
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  pointer-events: none;
+}
+
+.metrics-card:hover::before {
+  opacity: 1;
+}
+
+.metrics-icon {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
