@@ -41,14 +41,17 @@
   - Configure production environment
   - Commit: `deploy: backend deployed to Google Cloud Run`
 
-- [x] **M6-Backend-Cooccurrence**: Create co-occurrence analysis endpoint (2025-10-15) - Commit: 58b7c5a
+- [x] **M6-Backend-Cooccurrence**: Create co-occurrence analysis endpoint (2025-10-15) - Commits: 58b7c5a, a9cfebc
   - Implement word co-occurrence calculation algorithm
   - Create /api/cooccurrence endpoint with query parameters
   - Support filtering by target word (e.g., ?term=暈船)
   - Calculate edge weights based on co-occurrence frequency
   - Add sentiment scoring for word pairs
   - Optimize query performance with caching
+  - Deploy to Cloud Run: https://sentiment-api-455948041791.asia-east1.run.app
+  - Test results: 51 nodes, 50 edges for threshold=5
   - Commit: `feat: add co-occurrence analysis API endpoint`
+  - Commit: `fix: correct API endpoint configuration for Cloud Run backend`
 
 ---
 
@@ -331,7 +334,8 @@ git push origin main
 
 **Live Production**:
 - Frontend: https://sharp-bivouac-472901-s8.web.app
-- Backend API: https://sentiment-api-944971472305.asia-east1.run.app/api/cooccurrence
+- Backend API: https://sentiment-api-455948041791.asia-east1.run.app
+- Backend revision: sentiment-api-00010-j2m (2025-10-15)
 
 **Features Implemented**:
 - Force-directed D3 graph with "暈船" as pulsing center node

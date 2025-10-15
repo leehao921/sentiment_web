@@ -3,7 +3,8 @@
 ## Quick Reference
 - **Project**: Sentiment Analysis Visualization Dashboard
 - **Language**: Chinese Traditional (繁體中文)
-- **Backend API**: https://sentiment-api-944971472305.asia-east1.run.app
+- **Backend API**: https://sentiment-api-455948041791.asia-east1.run.app
+- **Backend Revision**: sentiment-api-00010-j2m (deployed 2025-10-15)
 - **Frontend URL**: https://sharp-bivouac-472901-s8.web.app
 - **GCP Project**: sharp-bivouac-472901-s8
 
@@ -38,32 +39,34 @@ firstweb/
 
 ## Current Status
 
-### Completed
-- ✅ Backend API deployed to Cloud Run
-- ✅ Visualization components built:
-  - SentimentPieChart.jsx
-  - SentimentTimeline.jsx
-  - SentimentHeatmap.jsx
-  - WordCloud.jsx
-  - MetricsCards.jsx
+### Completed ✅ (All Milestones: 23/24 - 96%)
+- ✅ Backend API deployed to Cloud Run (revision: sentiment-api-00010-j2m)
+  - All endpoints working: /api/sentiment-data, /api/analytics, /api/cooccurrence
+  - 512 records processed from GCS bucket
+  - Co-occurrence endpoint: 51 nodes, 50 edges (threshold=5)
+  - 5-minute timeout, 512Mi memory allocation
+- ✅ Visualization components built (all with dark high-tech neon design):
+  - SentimentPieChart.jsx (neon colors with SVG glow)
+  - SentimentTimeline.jsx (multi-line with gradients)
+  - SentimentHeatmap.jsx (D3 gradient scale)
+  - WordCloud.jsx (Noto Sans TC font)
+  - MetricsCards.jsx (Framer Motion animations)
+  - SemanticCooccurrenceGraph.jsx (D3 force simulation) ✅ NEW
 - ✅ i18n configuration with Traditional Chinese
-- ✅ API service layer (src/services/api.js)
-- ✅ Firebase Hosting setup
+- ✅ API service layer (src/services/api.js) - Fixed endpoint paths
+- ✅ Firebase Hosting setup and deployed
+- ✅ SentimentContext with data fetching and caching
+- ✅ Dashboard fully integrated with all visualizations
+- ✅ Dark high-tech design system with neon accents
 
-### In Progress
-- 🔄 Integrating visualizations into Dashboard
-- 🔄 Creating SentimentContext for state management
+### Recent Fixes (2025-10-15) 🔧
+- Fixed API endpoint configuration (removed duplicate /api prefix in baseURL)
+- Updated frontend to point to correct Cloud Run service URL
+- Backend redeployed to Cloud Run with improved configuration
+- All endpoints tested and verified working in production
 
-### Planned
-- 📋 Semantic Co-occurrence Network Graph (語義共現網絡圖)
-  - Force-directed graph for "暈船" word associations
-  - Interactive filtering and exploration
-  - D3.js force simulation implementation
-
-### Issues Found
-1. Dashboard.jsx only shows basic text - no graphs rendered
-2. SentimentContext.jsx doesn't exist (only test file)
-3. Missing dependencies: @mui/material, d3-cloud
+### Remaining Tasks
+- ⏳ M5-DevOps-Monitor: Setup monitoring and analytics (Google Analytics, Sentry)
 
 ## Implementation Plan
 
@@ -96,14 +99,15 @@ GCP Storage → Backend API → Frontend Context → Dashboard → Visualization
 ```
 
 ## Backend API Endpoints
-- `GET /api/sentiment-data` - Get all sentiment data
+- `GET /api/sentiment-data` - Get all sentiment data (512 records)
 - `GET /api/analytics` - Get analytics aggregation
 - `GET /api/files` - List available data files
+- `GET /api/cooccurrence?term=暈船&threshold=5` - Co-occurrence network (51 nodes, 50 edges)
 
 ## Environment Variables
 ```bash
-# Frontend (.env)
-REACT_APP_API_URL=https://sentiment-api-944971472305.asia-east1.run.app/api
+# Frontend (.env) - DO NOT commit this file
+REACT_APP_API_URL=https://sentiment-api-455948041791.asia-east1.run.app
 ```
 
 ## Next Steps
