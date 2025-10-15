@@ -15,6 +15,7 @@ export const SentimentProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadingMessage, setLoadingMessage] = useState('正在載入資料...');
   const [error, setError] = useState(null);
   const [lastFetch, setLastFetch] = useState(null);
 
@@ -30,9 +31,11 @@ export const SentimentProvider = ({ children }) => {
 
     setLoading(true);
     setError(null);
+    setLoadingMessage('正在從雲端儲存空間載入資料... (這可能需要 10-20 秒)');
 
     try {
       // Fetch both sentiment data and analytics
+      setLoadingMessage('正在處理情感分析資料...');
       const [sentimentResponse, analyticsResponse] = await Promise.all([
         sentimentAPI.getAll(),
         sentimentAPI.getAnalytics()
@@ -193,6 +196,7 @@ export const SentimentProvider = ({ children }) => {
     data,
     analytics,
     loading,
+    loadingMessage,
     error,
     fetchSentimentData,
     getProcessedData,

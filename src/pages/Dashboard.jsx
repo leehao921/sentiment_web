@@ -13,7 +13,7 @@ import './Dashboard.css';
 
 function Dashboard() {
   const { t } = useTranslation();
-  const { loading, error, getProcessedData, refresh } = useSentiment();
+  const { loading, loadingMessage, error, getProcessedData, refresh } = useSentiment();
   const [networkData, setNetworkData] = useState(null);
   const [networkLoading, setNetworkLoading] = useState(true);
 
@@ -80,7 +80,11 @@ function Dashboard() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <h2>{t('loading')}</h2>
+        <div className="loading-spinner"></div>
+        <h2>{loadingMessage || t('loading')}</h2>
+        <p style={{ fontSize: '14px', opacity: 0.7, marginTop: '10px' }}>
+          首次載入可能需要較長時間，請耐心等候...
+        </p>
       </motion.div>
     );
   }
