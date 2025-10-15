@@ -112,6 +112,30 @@ function Dashboard() {
     metricsData
   } = getProcessedData();
 
+  console.log('Dashboard data:', {
+    pieData,
+    timelineData: timelineData?.length,
+    heatmapData: heatmapData?.length,
+    wordCloudData: wordCloudData?.length,
+    metricsData
+  });
+
+  // Show error if no data
+  if (!pieData || (pieData.positive === 0 && pieData.negative === 0 && pieData.neutral === 0)) {
+    return (
+      <motion.div
+        className="dashboard-error"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        <h2>無資料</h2>
+        <p>無法載入情感分析資料，請檢查網路連接或稍後再試。</p>
+        <button onClick={refresh}>重新載入</button>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       className="dashboard"
