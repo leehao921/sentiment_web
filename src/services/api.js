@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://sentiment-api-455948041791.asia-east1.run.app/api';
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
@@ -55,6 +55,10 @@ export const sentimentAPI = {
 
   // Get files list
   getFiles: () => api.get('/files'),
+
+  // Get co-occurrence network data
+  getCooccurrence: (term = '暈船', threshold = 5) =>
+    api.get(`/cooccurrence?term=${encodeURIComponent(term)}&threshold=${threshold}`),
 };
 
 export default api;
