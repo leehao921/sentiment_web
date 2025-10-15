@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { sentimentAPI } from '../services/api';
 
 const SentimentContext = createContext();
@@ -17,14 +17,14 @@ export const SentimentProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [loadingMessage, setLoadingMessage] = useState('正在載入資料...');
   const [error, setError] = useState(null);
-  const [lastFetch, setLastFetch] = useState(null);
+  const lastFetchRef = useRef(null);
 
   // Cache duration: 5 minutes
   const CACHE_DURATION = 5 * 60 * 1000;
 
   const fetchSentimentData = useCallback(async (forceRefresh = false) => {
-    // Check cache
-    if (!forceRefresh && lastFetch && (Date.now() - lastFetch < CACHE_DURATION)) {
+    // Check cache using ref to avoid infinite loop
+    if (!forceRefresh && lastFetchRef.current && (Date.now() - lastFetchRef.current < CACHE_DURATION)) {
       console.log('Using cached sentiment data');
       return;
     }
@@ -52,7 +52,7 @@ export const SentimentProvider = ({ children }) => {
 
       setData(sentimentData || []);
       setAnalytics(analyticsResponse.data || null);
-      setLastFetch(Date.now());
+      lastFetchRef.current = Date.now();
 
       // Cache to localStorage
       try {
@@ -84,12 +84,12 @@ export const SentimentProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  }, [lastFetch]);
+  }, []); // Remove lastFetch dependency to prevent infinite loop
 
-  // Fetch data on mount
+  // Fetch data on mount only
   useEffect(() => {
     fetchSentimentData();
-  }, [fetchSentimentData]);
+  }, []); // Empty dependency array - run once on mount only
 
   // Process data for visualizations
   const getProcessedData = useCallback(() => {
