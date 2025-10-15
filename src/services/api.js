@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://sentiment-api-455948041791.asia-east1.run.app/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://sentiment-api-455948041791.asia-east1.run.app';
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
@@ -41,24 +41,24 @@ api.interceptors.response.use(
 // Sentiment API endpoints
 export const sentimentAPI = {
   // Get all sentiment data
-  getAll: () => api.get('/sentiment-data'),
+  getAll: () => api.get('/api/sentiment-data'),
 
   // Get by sentiment type (positive, negative, neutral)
-  getByType: (type) => api.get(`/sentiment-data?type=${type}`),
+  getByType: (type) => api.get(`/api/sentiment-data?type=${type}`),
 
   // Get by date range
   getByDateRange: (startDate, endDate) =>
-    api.get(`/sentiment-data?startDate=${startDate}&endDate=${endDate}`),
+    api.get(`/api/sentiment-data?startDate=${startDate}&endDate=${endDate}`),
 
   // Get analytics aggregation
-  getAnalytics: () => api.get('/analytics'),
+  getAnalytics: () => api.get('/api/analytics'),
 
   // Get files list
-  getFiles: () => api.get('/files'),
+  getFiles: () => api.get('/api/files'),
 
   // Get co-occurrence network data
   getCooccurrence: (term = '暈船', threshold = 5) =>
-    api.get(`/cooccurrence?term=${encodeURIComponent(term)}&threshold=${threshold}`),
+    api.get(`/api/cooccurrence?term=${encodeURIComponent(term)}&threshold=${threshold}`),
 };
 
 export default api;
