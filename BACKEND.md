@@ -35,226 +35,30 @@ git checkout -b backend-dev
 ### Milestone 1: M1-Backend-Setup
 **Goal**: Initialize Express server with CORS and basic structure
 
-**Tasks**:
-1. Create `server/` directory
-2. Initialize npm project: `cd server && npm init -y`
-3. Install dependencies:
-   ```bash
-   npm install express cors dotenv
-   npm install --save-dev nodemon
-   ```
-4. Create `server/index.js` with Express app
-5. Add CORS middleware
-6. Create health check endpoint: `GET /health`
-7. Add start scripts to `package.json`
-
-**Test**:
-```bash
-cd server
-node index.js
-curl http://localhost:3001/health
-```
-
-**Commit**:
-```bash
-git add server/
-git commit -m "feat: setup Express server with CORS and basic routes
-
-Completed: M1-Backend-Setup
-- Initialized Express server on port 3001
-- Added CORS middleware
-- Created health check endpoint
-- Configured nodemon for development
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
-
-git push origin backend-dev
-```
+**Status**: ✅ Complete (Commit: `f58c928`)
 
 ### Milestone 2: M2-Backend-GCP-Integration
 **Goal**: Connect to Google Cloud Storage and list JSON files
 
-**Tasks**:
-1. Install Google Cloud dependencies:
-   ```bash
-   npm install @google-cloud/storage
-   ```
-2. Configure Application Default Credentials (use your gcloud CLI)
-3. Create `server/utils/gcpClient.js` to initialize Storage client
-4. Create endpoint: `GET /api/files` to list bucket files
-5. Test connection to `gs://sharp-bivouac-472901-s8-docs/rawdata/`
-
-**Test**:
-```bash
-curl http://localhost:3001/api/files
-```
-
-Expected response:
-```json
-{
-  "files": ["file1.json", "file2.json"],
-  "count": 2
-}
-```
-
-**Commit**:
-```bash
-git add server/
-git commit -m "feat: integrate GCP Storage API for rawdata access
-
-Completed: M2-Backend-GCP-Integration
-- Added @google-cloud/storage dependency
-- Created GCP Storage client with ADC
-- Implemented /api/files endpoint
-- Successfully connected to bucket
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
-
-git push origin backend-dev
-```
+**Status**: ✅ Complete (Commit: `4e2a376`)
 
 ### Milestone 3: M3-Backend-Data-Processing
 **Goal**: Read and process JSON data from bucket
 
-**Tasks**:
-1. Create `server/controllers/sentimentController.js`
-2. Implement function to download JSON from bucket
-3. Create endpoint: `GET /api/sentiment-data`
-4. Parse and combine all JSON files
-5. Add data validation
-6. Handle errors gracefully
+**Status**: ✅ Complete (Commit: `4e2a376`)
 
-**Expected Response Format**:
-```json
-{
-  "data": [
-    {
-      "id": "1",
-      "text": "評論內容",
-      "sentiment": "positive",
-      "score": 0.85,
-      "timestamp": "2025-01-15T10:30:00Z"
-    }
-  ],
-  "total": 100,
-  "source": "gs://sharp-bivouac-472901-s8-docs/rawdata/"
-}
-```
-
-**Commit**:
-```bash
-git add server/
-git commit -m "feat: add data processing for sentiment analysis JSON
-
-Completed: M3-Backend-Data-Processing
-- Created sentiment controller
-- Implemented JSON parsing from GCS
-- Added data validation
-- Created /api/sentiment-data endpoint
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
-
-git push origin backend-dev
-```
 
 ### Milestone 4: M4-Backend-API-Complete
 **Goal**: Complete all API endpoints with filtering and aggregation
 
-**Tasks**:
-1. Add filtering endpoints:
-   - `GET /api/sentiment-data?type=positive|negative|neutral`
-   - `GET /api/sentiment-data?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD`
-2. Create analytics endpoint: `GET /api/analytics`
-3. Add aggregation functions:
-   - Calculate sentiment distribution
-   - Compute average scores
-   - Count by date
-4. Add caching with memory cache or Redis
-5. Add rate limiting middleware
-6. Write API documentation
+**Status**: ✅ Complete (Commit: `1c5ce2c`)
 
-**Analytics Response Format**:
-```json
-{
-  "distribution": {
-    "positive": 45,
-    "negative": 20,
-    "neutral": 35
-  },
-  "averageScore": 0.65,
-  "totalAnalyzed": 1000,
-  "dateRange": {
-    "start": "2025-01-01",
-    "end": "2025-01-15"
-  }
-}
-```
-
-**Commit**:
-```bash
-git add server/
-git commit -m "feat: complete sentiment data API endpoints
-
-Completed: M4-Backend-API-Complete
-- Added filtering by sentiment type
-- Added date range filtering
-- Created analytics aggregation endpoint
-- Implemented caching layer
-- Added rate limiting
-- Documented all API endpoints
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
-
-git push origin backend-dev
-```
 
 ### Milestone 5: M5-Backend-Deploy
 **Goal**: Deploy backend to Google Cloud Run
 
-**Tasks**:
-1. Create `server/Dockerfile`
-2. Test Docker build locally
-3. Deploy to Cloud Run:
-   ```bash
-   gcloud run deploy sentiment-api \
-     --source ./server \
-     --region asia-east1 \
-     --allow-unauthenticated \
-     --project sharp-bivouac-472901-s8
-   ```
-4. Get deployment URL
-5. Test production endpoints
-6. Update CORS to allow frontend domain
-7. Document deployment process
+**Status**: ✅ Complete (Commit: `3112d4c`)
 
-**Commit**:
-```bash
-git add server/
-git commit -m "deploy: backend deployed to Google Cloud Run
-
-Completed: M5-Backend-Deploy
-- Created Dockerfile for backend
-- Deployed to Cloud Run (asia-east1)
-- Configured production CORS
-- Updated environment variables
-- Tested all endpoints in production
-
-Deployment URL: https://sentiment-api-xxx-uc.a.run.app
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
-
-git push origin backend-dev
-```
 
 ## API Endpoints Reference
 

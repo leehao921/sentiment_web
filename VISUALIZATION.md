@@ -244,8 +244,45 @@ function Dashboard() {
 - Data format requirements
 - Performance considerations
 
+## Milestone 6: M6-Viz-NetworkGraph
+**Goal**: Create Semantic Co-occurrence Network Graph for "暈船" associations
+
+**Status**: 🔄 Planned
+
+**Purpose**: Visualize "暈船" and related word associations (e.g., "曖昧," "心動," "失落").
+
+**Type**: Force-directed network graph (D3.js / Sigma.js)
+
+**Design Enhancements**:
+- Central node "暈船" pulsing neon blue
+- Related terms orbit dynamically around central node
+- Edge weights visualized by luminous thickness (stronger association = thicker edge)
+- Interactive filter (slider for co-occurrence frequency threshold)
+- Background gradient subtly shifting based on dominant emotion cluster
+- Hover tooltips showing co-occurrence count and sentiment score
+- Click nodes to filter and show secondary associations
+- Zoom and pan functionality for exploration
+
+**Implementation Tasks**:
+- [ ] Install D3.js force simulation library: `npm install d3-force d3-selection d3-zoom`
+- [ ] Create backend endpoint for co-occurrence data: `/api/cooccurrence?term=暈船`
+- [ ] Build `SemanticCooccurrenceGraph.jsx` component
+- [ ] Implement force-directed layout with D3
+- [ ] Add interactive controls (threshold slider, node filtering)
+- [ ] Optimize performance for large networks (use canvas rendering if needed)
+- [ ] Add Chinese tooltips and labels
+- [ ] Implement responsive sizing
+
+**Component Location**: `src/components/visualizations/SemanticCooccurrenceGraph.jsx`
+
+**Commit Message**: `feat: add Semantic Co-occurrence Graph for word associations`
+
+---
+
 ## Resources
 - [Recharts Documentation](https://recharts.org/)
 - [D3.js Documentation](https://d3js.org/)
+- [D3 Force Simulation](https://d3js.org/d3-force)
 - [react-wordcloud](https://github.com/chrisrzhou/react-wordcloud)
 - [date-fns Documentation](https://date-fns.org/)
+- [Sigma.js Network Visualization](https://www.sigmajs.org/)
