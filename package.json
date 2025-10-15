@@ -13,14 +13,27 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@google-cloud/storage": "^7.17.2",
+    "@mui/material": "^7.3.4",
     "axios": "^1.12.2",
+    "d3": "^7.9.0",
+    "d3-cloud": "^1.2.7",
+    "d3-drag": "^3.0.0",
+    "d3-force": "^3.0.0",
+    "d3-scale": "^4.0.2",
+    "d3-selection": "^3.0.0",
+    "d3-zoom": "^3.0.0",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.23.24",
     "i18next": "^25.6.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-i18next": "^16.0.0",
     "react-router-dom": "^7.9.4",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "recharts": "^3.2.1"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",
@@ -28,5 +41,17 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "jest-environment-jsdom": "^30.2.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
