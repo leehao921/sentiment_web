@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
 import { useSentiment } from '../context/SentimentContext';
 import { sentimentAPI } from '../services/api';
 import SentimentPieChart from '../components/visualizations/SentimentPieChart';
@@ -36,71 +35,25 @@ function Dashboard() {
     fetchNetworkData();
   }, []);
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.4, 0, 0.2, 1]
-      }
-    }
-  };
-
-  const headerVariants = {
-    hidden: { opacity: 0, y: -30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.4, 0, 0.2, 1]
-      }
-    }
-  };
-
   if (loading) {
     return (
-      <motion.div
-        className="dashboard-loading"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
+      <div className="dashboard-loading">
         <div className="loading-spinner"></div>
         <h2>{loadingMessage || t('loading')}</h2>
         <p style={{ fontSize: '14px', opacity: 0.7, marginTop: '10px' }}>
           首次載入可能需要較長時間，請耐心等候...
         </p>
-      </motion.div>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <motion.div
-        className="dashboard-error"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3 }}
-      >
+      <div className="dashboard-error">
         <h2>{t('error')}</h2>
         <p>{error}</p>
         <button onClick={refresh}>{t('filters.reset')}</button>
-      </motion.div>
+      </div>
     );
   }
 
@@ -123,124 +76,70 @@ function Dashboard() {
   // Show error if no data
   if (!pieData || (pieData.positive === 0 && pieData.negative === 0 && pieData.neutral === 0)) {
     return (
-      <motion.div
-        className="dashboard-error"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3 }}
-      >
+      <div className="dashboard-error">
         <h2>無資料</h2>
         <p>無法載入情感分析資料，請檢查網路連接或稍後再試。</p>
         <button onClick={refresh}>重新載入</button>
-      </motion.div>
+      </div>
     );
   }
 
   return (
-    <motion.div
-      className="dashboard"
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-    >
-      <motion.div
-        className="dashboard-header"
-        variants={headerVariants}
-      >
+    <div className="dashboard">
+      <div className="dashboard-header">
         <h1>{t('title')}</h1>
-        <motion.button
-          className="refresh-button"
-          onClick={refresh}
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.98 }}
-        >
+        <button className="refresh-button" onClick={refresh}>
           {t('filters.reset')}
-        </motion.button>
-      </motion.div>
+        </button>
+      </div>
 
-      <motion.section
-        className="metrics-section"
-        variants={itemVariants}
-      >
+      <section className="metrics-section">
         <MetricsCards data={metricsData} />
-      </motion.section>
+      </section>
 
-      <motion.div
-        className="charts-grid"
-        variants={containerVariants}
-      >
-        <motion.section
-          className="chart-card"
-          variants={itemVariants}
-          whileHover={{
-            y: -4,
-            scale: 1.01,
-            transition: { duration: 0.3 }
-          }}
-        >
+      <div className="charts-grid">
+        <div className="chart-card">
           <h2>{t('charts.pie_chart')}</h2>
-          <SentimentPieChart data={pieData} />
-        </motion.section>
+          <div style={{ width: '100%', height: '400px' }}>
+            <SentimentPieChart data={pieData} />
+          </div>
+        </div>
 
-        <motion.section
-          className="chart-card"
-          variants={itemVariants}
-          whileHover={{
-            y: -4,
-            scale: 1.01,
-            transition: { duration: 0.3 }
-          }}
-        >
+        <div className="chart-card">
           <h2>{t('charts.word_cloud')}</h2>
-          <WordCloud data={wordCloudData} />
-        </motion.section>
+          <div style={{ width: '100%', height: '400px' }}>
+            <WordCloud data={wordCloudData} />
+          </div>
+        </div>
 
-        <motion.section
-          className="chart-card full-width"
-          variants={itemVariants}
-          whileHover={{
-            y: -4,
-            scale: 1.01,
-            transition: { duration: 0.3 }
-          }}
-        >
+        <div className="chart-card full-width">
           <h2>{t('charts.line_chart')}</h2>
-          <SentimentTimeline data={timelineData} />
-        </motion.section>
+          <div style={{ width: '100%', height: '400px' }}>
+            <SentimentTimeline data={timelineData} />
+          </div>
+        </div>
 
-        <motion.section
-          className="chart-card full-width"
-          variants={itemVariants}
-          whileHover={{
-            y: -4,
-            scale: 1.01,
-            transition: { duration: 0.3 }
-          }}
-        >
+        <div className="chart-card full-width">
           <h2>{t('charts.heatmap')}</h2>
-          <SentimentHeatmap data={heatmapData} />
-        </motion.section>
+          <div style={{ width: '100%', height: '400px' }}>
+            <SentimentHeatmap data={heatmapData} />
+          </div>
+        </div>
 
-        <motion.section
-          className="chart-card full-width"
-          variants={itemVariants}
-          whileHover={{
-            y: -4,
-            scale: 1.01,
-            transition: { duration: 0.3 }
-          }}
-        >
+        <div className="chart-card full-width">
           <h2>{t('charts.network_graph')}</h2>
-          {networkLoading ? (
-            <div className="network-loading">{t('network.loading')}</div>
-          ) : networkData ? (
-            <SemanticCooccurrenceGraph data={networkData} />
-          ) : (
-            <div className="network-error">{t('network.no_data')}</div>
-          )}
-        </motion.section>
-      </motion.div>
-    </motion.div>
+          <div style={{ width: '100%', height: '400px' }}>
+            {networkLoading ? (
+              <div className="network-loading">{t('network.loading')}</div>
+            ) : networkData ? (
+              <SemanticCooccurrenceGraph data={networkData} />
+            ) : (
+              <div className="network-error">{t('network.no_data')}</div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
