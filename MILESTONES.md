@@ -175,12 +175,13 @@
   - Set up CORS for frontend
   - Commit: `deploy: configure Cloud Run for backend`
 
-- [ ] **M4-DevOps-Domain**: Configure custom domain
+- [x] **M4-DevOps-Domain**: Configure custom domain (2025-10-15) - Manual Setup
   - Document domain setup process
   - Configure DNS records
   - Set up SSL certificates
   - Update CORS for custom domains
-  - Commit: `config: add custom domain DNS configuration`
+  - Firebase Hosting with custom domain configured manually
+  - Status: Complete
 
 - [ ] **M5-DevOps-Monitor**: Setup monitoring and analytics
   - Integrate Google Analytics (GA4)
@@ -240,12 +241,12 @@ DevOps needs all components ready before:
 
 ## Completion Status
 
-**Overall Progress**: 22/24 milestones (92%)
+**Overall Progress**: 23/24 milestones (96%)
 
 - Backend: 6/6 (100%) ✅ COMPLETE
 - Frontend: 5/5 (100%) ✅ COMPLETE
 - Visualization: 6/6 (100%) ✅ COMPLETE
-- DevOps: 4/6 (67%)
+- DevOps: 5/6 (83%) - Only M5-DevOps-Monitor remaining
 - Design System: 1/1 (100%) ✅ COMPLETE
 
 ---
