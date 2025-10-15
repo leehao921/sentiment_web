@@ -1,0 +1,112 @@
+.network-graph-container {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  background: linear-gradient(
+    135deg,
+    #0A0F16 0%,
+    #151B29 50%,
+    #0A0F16 100%
+  );
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    inset 0 0 60px rgba(0, 217, 255, 0.05);
+}
+
+.network-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+.network-svg:active {
+  cursor: grabbing;
+}
+
+/* Central node pulsing animation */
+.center-node .center-circle {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    transform: scale(1);
+    filter: url(#center-glow) brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    filter: url(#center-glow) brightness(1.3);
+  }
+}
+
+/* Related nodes */
+.related-circle {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.related-circle:hover {
+  filter: brightness(1.5);
+}
+
+/* Edge styling */
+.edge {
+  transition: stroke-opacity 0.3s ease;
+}
+
+/* Node labels */
+.node-label {
+  text-shadow:
+    0 0 10px currentColor,
+    0 2px 4px rgba(0, 0, 0, 0.8);
+  user-select: none;
+}
+
+/* Empty state */
+.network-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #B8C5D6;
+  font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .network-graph-container {
+    height: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .network-graph-container {
+    height: 500px;
+  }
+
+  .node-label {
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .network-graph-container {
+    height: 400px;
+  }
+}
