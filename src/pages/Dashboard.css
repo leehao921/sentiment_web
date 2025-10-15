@@ -329,6 +329,19 @@
 .chart-card > div {
   position: relative;
   z-index: 1;
+  min-height: 350px;
+  width: 100%;
+  display: block;
+}
+
+/* Ensure Recharts ResponsiveContainer is visible */
+.chart-card .recharts-responsive-container {
+  min-height: 350px !important;
+}
+
+/* Ensure all chart wrappers have proper dimensions */
+.chart-card > * {
+  min-height: 300px;
 }
 
 /* ===== Responsive Design ===== */
