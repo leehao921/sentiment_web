@@ -41,14 +41,23 @@ export const SentimentProvider = ({ children }) => {
         sentimentAPI.getAnalytics()
       ]);
 
-      setData(sentimentResponse.data.data || []);
+      // Backend returns { data: [...], total: 512, filters: {}, source: "" }
+      // Axios puts response body in .data, so we need sentimentResponse.data.data
+      const sentimentData = Array.isArray(sentimentResponse.data) ? sentimentResponse.data : sentimentResponse.data.data;
+
+      console.log('Fetched sentiment data:', {
+        total: sentimentData?.length || 0,
+        sample: sentimentData?.[0]
+      });
+
+      setData(sentimentData || []);
       setAnalytics(analyticsResponse.data || null);
       setLastFetch(Date.now());
 
       // Cache to localStorage
       try {
         localStorage.setItem('sentimentData', JSON.stringify({
-          data: sentimentResponse.data.data,
+          data: sentimentData,
           analytics: analyticsResponse.data,
           timestamp: Date.now()
         }));
